@@ -2,7 +2,7 @@
 title: Firebase
 tags:
   - firebase
-  - api
+  - APIs
 emoji: 👋
 ---
 
