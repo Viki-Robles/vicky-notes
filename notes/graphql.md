@@ -16,38 +16,37 @@ export const graphQlClient = new GraphQLClient(endpoint)
 
 ### Gql Query Modelling I
 
-```useGqlQuery.ts
-import { QueryKey, useQuery, UseQueryResult } from 'react-query'
-import { graphQlClient } from '../../graphql/client'
+```ts
+import { QueryKey, useQuery, UseQueryResult } from "react-query";
+import { graphQlClient } from "../../graphql/client";
 
 export const useGqlQuery = <ResponseData = unknown, Variables = unknown>(
   queryKey: QueryKey,
   query: string,
-  variables?: Variables,
+  variables?: Variables
 ): UseQueryResult<ResponseData, Error> => {
   return useQuery(queryKey, async () => {
     try {
-      const response = await graphQlClient.request(query, variables)
-      return response
+      const response = await graphQlClient.request(query, variables);
+      return response;
     } catch (error) {
-      console.log(`🚀 ~ useGqlQuery ~ error`, error)
+      console.log(`🚀 ~ useGqlQuery ~ error`, error);
     }
-  })
-}
+  });
+};
 ```
 
 ### Gql Query Modelling II
 
-```useGqlQuery.ts
-
+```ts
 import {
   QueryKey,
   useQuery,
   UseQueryOptions,
   UseQueryResult,
-} from 'react-query'
-import { auth } from '../../config'
-import { graphQlClient } from '../../graphql/client'
+} from "react-query";
+import { auth } from "../../config";
+import { graphQlClient } from "../../graphql/client";
 
 /**
  * @name useGqlQuery
@@ -58,14 +57,14 @@ export const useGqlQuery = <ResponseData = unknown, Variables = unknown>(
   queryKey: QueryKey,
   query: string,
   variables?: Variables,
-  options?: UseQueryOptions<ResponseData, Error, ResponseData, QueryKey>,
+  options?: UseQueryOptions<ResponseData, Error, ResponseData, QueryKey>
 ): UseQueryResult<ResponseData, Error> => {
   return useQuery(
     queryKey,
     async () => {
       try {
         // always get the latest token
-        const token = await auth?.currentUser?.getIdToken()
+        const token = await auth?.currentUser?.getIdToken();
 
         // if the token is `undefined`, no auth headers will be set
         // this allows us to use the GraphQL API for public queries
@@ -74,19 +73,19 @@ export const useGqlQuery = <ResponseData = unknown, Variables = unknown>(
           ? {
               Authorization: `Bearer ${token}`,
             }
-          : undefined
+          : undefined;
 
         const response = await graphQlClient.request(
           query,
           variables,
-          authorisationHeaders,
-        )
-        return response
+          authorisationHeaders
+        );
+        return response;
       } catch (error) {
-        console.log(`🚀 ~ useGqlQuery ~ error`, error)
+        console.log(`🚀 ~ useGqlQuery ~ error`, error);
       }
     },
-    options,
-  )
-}
+    options
+  );
+};
 ```
