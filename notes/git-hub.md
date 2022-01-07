@@ -1,10 +1,15 @@
 ---
-title: Github Actions CheetSheat
+title: Github Actions
 tags:
-  - github
+  - javascript
+emoji: 👋
 ---
 
 ### How to get started in four simple steps
+
+```js
+name;
+```
 
 #### name
 
@@ -31,6 +36,7 @@ The final step runs programs on the command-line. By default, these programs wil
 In this case, a Node.js continuous integration build will be performed by running npm ci to download and install packages from the npm registry, then running npm run build to run the build script specified by the project, and finally running npm test to run any unit tests in the project.
 
 ```ts
+
 name: CI for Node.js Project
 on:
   push:
@@ -53,4 +59,5 @@ jobs:
         npm run build
         npm test
       name: Build and Test
+
 ```
